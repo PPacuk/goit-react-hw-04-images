@@ -1,4 +1,8 @@
 import { Component } from 'react';
-import css from './Loader.module.css';
+import { InfinitySpin } from 'react-loader-spinner';
 
-export default class Loader extends Component {}
+export default class Loader extends Component {
+  render() {
+    return <InfinitySpin width="200" color="#3f51b5" />;
+  }
+}

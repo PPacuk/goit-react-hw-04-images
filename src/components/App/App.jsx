@@ -3,33 +3,44 @@ import axios from 'axios';
 import css from './App.module.css';
 import Searchbar from 'components/Searchbar/Searchbar';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import Button from 'components/Button/Button';
-
-axios.defaults.baseURL = 'https://pixabay.com/api/';
+import Loader from 'components/Loader/Loader';
+import fetchGalleryByQuery from 'services/api';
 
 export default class App extends Component {
   state = {
     gallery: [],
+    isLoading: false,
+    error: null,
+  };
+
+  searchHandler = () => {
+    
   };
 
   async componentDidMount() {
-    const API_KEY = '35040895-5a8e4f49ce4c30427977eed8e';
-    const response = await axios.get(
-      `?q=dog&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    );
-    this.setState({ gallery: response.data.hits });
+    this.setState({ isLoading: true });
+
+    try {
+      const gallery = await fetchGalleryByQuery('dog');
+      this.setState({ gallery });
+    } catch (err) {
+      this.setState({ error: err.message });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {
-    const { gallery } = this.state;
+    const { gallery, isLoading, error } = this.state;
     console.log();
 
     return (
       <div className={css.mainContainer}>
         <Searchbar />
-        <ImageGallery />
-        <ImageGalleryItem gallery={gallery} />
+        {error !== null && `Error : ${error}`}
+        {isLoading ? <Loader /> : <ImageGallery gallery={gallery} />}
+
         <Button />
         {/* <Modal /> */}
       </div>
