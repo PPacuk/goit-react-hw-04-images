@@ -34,9 +34,9 @@ export default class App extends Component {
       <div className={css.mainContainer}>
         <Searchbar getGallery={this.getGallery} />
         {error !== null && `Error : ${error}`}
-        {isLoading ? <Loader /> : <ImageGallery gallery={gallery} />}
+        {isLoading ? <Loader /> : <ImageGallery gallery={gallery} /> }
+        {gallery.length !== 0 ? <Button /> : null}
 
-        <Button />
         {/* <Modal /> */}
       </div>
     );
