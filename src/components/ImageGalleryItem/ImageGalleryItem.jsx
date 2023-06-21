@@ -5,7 +5,11 @@ export default class ImageGalleryItem extends Component {
   render() {
     return this.props.gallery.map(({ webformatURL, id, tags }) => (
       <li className={css.imageGalleryItem} key={id}>
-        <img src={webformatURL} alt={tags} />
+        <img
+          className={css.imageGalleryItemImage}
+          src={webformatURL}
+          alt={tags}
+        />
       </li>
     ));
   }

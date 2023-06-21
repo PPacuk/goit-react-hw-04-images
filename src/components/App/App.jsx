@@ -13,22 +13,18 @@ export default class App extends Component {
     error: null,
   };
 
-  searchHandler = () => {
-    
-  };
-
-  async componentDidMount() {
+  getGallery = async ({searchQuery}) => {
     this.setState({ isLoading: true });
 
     try {
-      const gallery = await fetchGalleryByQuery('dog');
+      const gallery = await fetchGalleryByQuery(`${searchQuery}`);
       this.setState({ gallery });
     } catch (err) {
       this.setState({ error: err.message });
     } finally {
       this.setState({ isLoading: false });
     }
-  }
+  };
 
   render() {
     const { gallery, isLoading, error } = this.state;
@@ -36,7 +32,7 @@ export default class App extends Component {
 
     return (
       <div className={css.mainContainer}>
-        <Searchbar />
+        <Searchbar getGallery={this.getGallery} />
         {error !== null && `Error : ${error}`}
         {isLoading ? <Loader /> : <ImageGallery gallery={gallery} />}
 
