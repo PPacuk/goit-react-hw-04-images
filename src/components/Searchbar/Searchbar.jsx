@@ -9,13 +9,11 @@ export default class Searchbar extends Component {
   handleInput = e => {
     this.setState({ searchQuery: e.target.value });
   };
-  
+
   handleSubmit = e => {
     e.preventDefault();
-    
-    this.props.getGallery({...this.state});
-   
-    
+
+    this.props.getGallery({ ...this.state });
   };
 
   render() {
