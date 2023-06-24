@@ -17,9 +17,11 @@ export default class Searchbar extends Component {
   };
 
   render() {
+    const { searchQuery } = this.state;
+    const { handleSubmit, handleInput, } = this;
     return (
       <header className={css.searchbar}>
-        <form className={css.searchForm} onSubmit={this.handleSubmit}>
+        <form className={css.searchForm} onSubmit={handleSubmit}>
           <button type="submit" className={css.searchFormBtn}>
             <span className={css.searchFormBtnLabel}></span>
           </button>
@@ -31,8 +33,8 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={this.state.searchQuery}
-            onChange={this.handleInput}
+            value={searchQuery}
+            onChange={handleInput}
           />
         </form>
       </header>

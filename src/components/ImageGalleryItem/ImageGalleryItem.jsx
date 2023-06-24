@@ -6,7 +6,7 @@ export default class ImageGalleryItem extends Component {
   
   
   render() {
-    
+    const { openModal } = this.props;
     return this.props.gallery.map(({ webformatURL, id, tags }) => (
       <li className={css.imageGalleryItem} key={id}>
         <img
@@ -14,7 +14,7 @@ export default class ImageGalleryItem extends Component {
           src={webformatURL}
           alt={tags}
           id={id}
-          onClick={this.props.openModal}
+          onClick={openModal}
         />
       
       </li>

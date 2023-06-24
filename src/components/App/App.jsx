@@ -63,7 +63,7 @@ export default class App extends Component {
         {isLoading ? (
           <Loader />
         ) : (
-          <ImageGallery gallery={gallery} openModal={this.openModal} />
+          <ImageGallery gallery={gallery} openModal={openModal} />
         )}
         {gallery.length !== 0 ? <Button /> : null}
         {isModalOpen && (
