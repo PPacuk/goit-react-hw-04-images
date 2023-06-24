@@ -47,7 +47,6 @@ export default class App extends Component {
       this.setState({ isModalOpen: false });
     }
     this.setState({ isModalOpen: false });
-    
   };
 
   render() {
