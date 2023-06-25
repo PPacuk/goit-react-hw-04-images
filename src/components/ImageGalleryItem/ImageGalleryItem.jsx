@@ -2,9 +2,6 @@ import { Component } from 'react';
 import css from './ImageGalleryItem.module.css';
 
 export default class ImageGalleryItem extends Component {
-  
-  
-  
   render() {
     const { openModal } = this.props;
     return this.props.gallery.map(({ webformatURL, id, tags }) => (
@@ -16,7 +13,6 @@ export default class ImageGalleryItem extends Component {
           id={id}
           onClick={openModal}
         />
-      
       </li>
     ));
   }
