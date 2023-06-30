@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import css from './App.module.css';
 import Searchbar from 'components/Searchbar/Searchbar';
-import ImageGallery from 'components/ImageGallery/ImageGallery';
+import {ImageGallery} from 'components/ImageGallery/ImageGallery';
 import {Button} from 'components/Button/Button';
 import Loader from 'components/Loader/Loader';
 import fetchGalleryByQuery from 'services/api';

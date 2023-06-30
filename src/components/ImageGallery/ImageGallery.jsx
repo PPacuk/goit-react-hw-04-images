@@ -1,16 +1,13 @@
-import { Component } from 'react';
 import css from './ImageGallery.module.css';
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import {ImageGalleryItem} from 'components/ImageGalleryItem/ImageGalleryItem';
 
-export default class ImageGallery extends Component {
-  render() {
-    return (
-      <ul className={css.imageGallery}>
-        <ImageGalleryItem
-          gallery={this.props.gallery}
-          openModal={this.props.openModal}
-        />
-      </ul>
-    );
-  }
-}
+export const ImageGallery = ({gallery, openModal}) => {
+  return (
+    <ul className={css.imageGallery}>
+      <ImageGalleryItem
+        gallery={gallery}
+        openModal={openModal}
+      />
+    </ul>
+  );
+};
