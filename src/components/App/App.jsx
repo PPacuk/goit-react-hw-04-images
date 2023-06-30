@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import css from './App.module.css';
 import Searchbar from 'components/Searchbar/Searchbar';
@@ -8,97 +8,82 @@ import Loader from 'components/Loader/Loader';
 import fetchGalleryByQuery from 'services/api';
 import Modal from 'components/Modal/Modal';
 
-export default class App extends Component {
-  state = {
-    gallery: [],
-    isLoading: false,
-    error: null,
-    isModalOpen: false,
-    chosenImageId: null,
-    page: 1,
-    searchQuery: '',
-  };
+export const App = () => {
+  const [gallery, setGallery] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setModal] = useState(false);
+  const [chosenImageId, setChosenImageId] = useState(null);
+  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  getGallery = async ({ searchQuery }) => {
-    this.setState({ isLoading: true, searchQuery: searchQuery });
+  const getGallery = async searchQuery => {
+    setLoading(true);
+    setSearchQuery(searchQuery);
 
     try {
-      const gallery = await fetchGalleryByQuery(`${searchQuery}`);
-      this.setState({ gallery });
+      const gallery = await fetchGalleryByQuery(`dog`);
+      setGallery(gallery);
     } catch (err) {
-      this.setState({ error: err.message });
+      setError(err.message);
     } finally {
-      this.setState({ isLoading: false, page: 2 });
+      setLoading(false);
+      setPage(2);
     }
   };
 
-  addNextPage = async () => {
-    this.setState(prev => ({
-      page: prev.page + 1,
-    }));
+  const addNextPage = async () => {
+    setPage(prev => prev + 1);
     try {
-      const nextPageGallery = await fetchGalleryByQuery(
-        this.state.searchQuery,
-        this.state.page
-      );
-      this.setState(prev => ({
-        gallery: [...prev.gallery, ...nextPageGallery],
-      }));
+      const nextPageGallery = await fetchGalleryByQuery(searchQuery, page);
+      setGallery(prev => [...prev, ...nextPageGallery]);
     } catch (err) {
-      this.setState({ error: err.message });
-    } 
-  };
-
-  openModal = e => {
-    this.setState({ isModalOpen: true });
-    this.setState({ chosenImageId: e.currentTarget.id });
-  };
-
-  
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.closeModal, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.closeModal, false);
-  }
-
-  closeModal = e => {
-    if (e.keyCode === 27) {
-      this.setState({ isModalOpen: false });
+      setError(err.message);
     }
-    this.setState({ isModalOpen: false });
   };
 
-  render() {
-    const { gallery, isLoading, error, isModalOpen, chosenImageId } =
-      this.state;
-    const { getGallery, openModal, closeModal, addNextPage } = this;
+  const openModal = e => {
+    setModal(true);
+    setChosenImageId(e.currentTarget.id);
+  };
 
-    return (
-      <div className={css.mainContainer}>
-        <Searchbar getGallery={getGallery} addNextPage={addNextPage} />
-        {error !== null && `Error : ${error}`}
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <ImageGallery gallery={gallery} openModal={openModal} />
-        )}
-        {gallery.length !== 0 ? <Button addNextPage={addNextPage} /> : null}
-        {isModalOpen && (
-          <Modal
-            gallery={gallery}
-            isModalOpen={isModalOpen}
-            openModal={openModal}
-            closeModal={closeModal}
-            chosenImageId={chosenImageId}
-          />
-        )}
-      </div>
-    );
-  }
-}
+  // componentDidMount() {
+  //   document.addEventListener('keydown', this.closeModal, false);
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('keydown', this.closeModal, false);
+  // }
+
+  const closeModal = e => {
+    if (e.keyCode === 27) {
+      setModal(false);
+    }
+    setModal(false);
+  };
+
+  return (
+    <div className={css.mainContainer}>
+      <Searchbar getGallery={getGallery} addNextPage={addNextPage} />
+      {error !== null && `Error : ${error}`}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ImageGallery gallery={gallery} openModal={openModal} />
+      )}
+      {gallery.length !== 0 ? <Button addNextPage={addNextPage} /> : null}
+      {isModalOpen && (
+        <Modal
+          gallery={gallery}
+          isModalOpen={isModalOpen}
+          openModal={openModal}
+          closeModal={closeModal}
+          chosenImageId={chosenImageId}
+        />
+      )}
+    </div>
+  );
+};
 
 App.propTypes = {
   gallery: PropTypes.array,
