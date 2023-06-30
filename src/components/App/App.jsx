@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import {Searchbar} from 'components/Searchbar/Searchbar';
-import {ImageGallery} from 'components/ImageGallery/ImageGallery';
-import {Button} from 'components/Button/Button';
-import {Loader} from 'components/Loader/Loader';
-import {fetchGalleryByQuery} from 'services/api';
-import {Modal} from 'components/Modal/Modal';
+import { Searchbar } from 'components/Searchbar/Searchbar';
+import { ImageGallery } from 'components/ImageGallery/ImageGallery';
+import { Button } from 'components/Button/Button';
+import { Loader } from 'components/Loader/Loader';
+import { fetchGalleryByQuery } from 'services/api';
+import { Modal } from 'components/Modal/Modal';
 import css from './App.module.css';
 
 export const App = () => {
@@ -47,13 +47,9 @@ export const App = () => {
     setChosenImageId(e.currentTarget.id);
   };
 
-  // componentDidMount() {
-  //   document.addEventListener('keydown', this.closeModal, false);
-  // }
-
-  // componentWillUnmount() {
-  //   document.removeEventListener('keydown', this.closeModal, false);
-  // }
+  useEffect(() => {
+    document.addEventListener('keydown', closeModal, false);
+  }, []);
 
   const closeModal = e => {
     if (e.keyCode === 27) {

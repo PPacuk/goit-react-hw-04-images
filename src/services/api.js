@@ -9,5 +9,3 @@ export const fetchGalleryByQuery = async (searchQuery, page) => {
   );
   return response.data.hits;
 };
-
-
