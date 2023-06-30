@@ -1,25 +1,21 @@
-import { Component } from 'react';
+
 import { PropTypes } from 'prop-types';
+import { useState } from 'react';
 import css from './Searchbar.module.css';
 
-export default class Searchbar extends Component {
-  state = {
-    searchQuery: '',
+export const Searchbar = ({getGallery}) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleInput = e => {
+    setSearchQuery(e.target.value);
   };
 
-  handleInput = e => {
-    this.setState({ searchQuery: e.target.value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    this.props.getGallery({ ...this.state });
+    getGallery(searchQuery);
   };
 
-  render() {
-    const { searchQuery } = this.state;
-    const { handleSubmit, handleInput, } = this;
     return (
       <header className={css.searchbar}>
         <form className={css.searchForm} onSubmit={handleSubmit}>
@@ -41,7 +37,7 @@ export default class Searchbar extends Component {
       </header>
     );
   }
-}
+
 
 Searchbar.propTypes = {
   searchQuery: PropTypes.string

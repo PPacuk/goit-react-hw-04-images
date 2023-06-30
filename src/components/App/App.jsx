@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import css from './App.module.css';
-import Searchbar from 'components/Searchbar/Searchbar';
+import {Searchbar} from 'components/Searchbar/Searchbar';
 import {ImageGallery} from 'components/ImageGallery/ImageGallery';
 import {Button} from 'components/Button/Button';
 import {Loader} from 'components/Loader/Loader';
@@ -22,7 +22,7 @@ export const App = () => {
     setSearchQuery(searchQuery);
 
     try {
-      const gallery = await fetchGalleryByQuery(`dog`);
+      const gallery = await fetchGalleryByQuery(`${searchQuery}`);
       setGallery(gallery);
     } catch (err) {
       setError(err.message);
@@ -64,7 +64,7 @@ export const App = () => {
 
   return (
     <div className={css.mainContainer}>
-      <Searchbar getGallery={getGallery} addNextPage={addNextPage} />
+      <Searchbar getGallery={getGallery} />
       {error !== null && `Error : ${error}`}
       {isLoading ? (
         <Loader />
