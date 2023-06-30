@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import css from './App.module.css';
 import Searchbar from 'components/Searchbar/Searchbar';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
-import Button from 'components/Button/Button';
+import {Button} from 'components/Button/Button';
 import Loader from 'components/Loader/Loader';
 import fetchGalleryByQuery from 'services/api';
 import Modal from 'components/Modal/Modal';
